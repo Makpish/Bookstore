@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.know.models"
+                   schema="bookstore">
+
+    <class name="com.know.models.AuthorModel"
+           table="author">
+
+        <id name="id">
+            <generator class="native"/>
+        </id>
+
+        <property name="name"
+                  column="name"
+                  type="string"/>
+
+        <!--<query name="HQL_GET_ALL_AUTHOR">from AuthorModel</query>-->
+
+        <query name="HQL_GET_AUTHOR_BY_ID">
+            <![CDATA[from AuthorModel where id = :id]]>
+        </query>
+
+        <sql-query name="SQL_GET_ALL_AUTHOR">
+            <![CDATA[select id, name from AuthorModel]]>
+        </sql-query>
+
+    </class>
+
+    <class name="BookModel">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="name"
+                  column="name"
+                  type="string"/>
+        <many-to-one name="author" class="AuthorModel" column="id"/>
+    </class>
+
+</hibernate-mapping>

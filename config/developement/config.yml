@@ -1,0 +1,40 @@
+server:
+  type: default
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8085
+
+database:
+  driverClass: com.mysql.jdbc.Driver
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.MySQLDialect #org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate.show_sql: true
+    hibernate.hbm2ddl.auto: update
+    foreign_keys: true
+  user: newuser
+  password: password
+  url: jdbc:mysql://localhost:3306/bookstore
+
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      threshold: ALL
+      logFormat: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%X{X-Request-ID}] %-5level %logger{36} - %msg%n"
+      currentLogFilename: ./log/bookstore.log
+      archivedLogFilenamePattern: ./log/bookstore-%d.log.gz
+      archivedFileCount: 5
+    - type: file
+      threshold: ERROR
+      logFormat: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%X{X-Request-ID}] %-5level %logger{36} - %msg%n"
+      currentLogFilename: ./log/error.log
+      archivedLogFilenamePattern: ./log/error-%d.log.gz
+      archivedFileCount: 5
+    - type: console
+      threshold: ALL
+      logFormat: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%X{X-Request-ID}] %-5level %logger{36} - %msg%n"
+      target: stdout
